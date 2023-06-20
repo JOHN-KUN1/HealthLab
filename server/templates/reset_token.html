@@ -1,0 +1,48 @@
+{% extends "sign_upLayout.html"%}
+{%block content%}
+<main class="form-signin w-100 m-auto">
+    <img src="https://cdn-icons-png.flaticon.com/512/3533/3533271.png" height=50px alt="">
+    <h1 class="h3 mb-3 fw-normal">Reset Password</h1>
+    <!-- DISPLAYS ERROR MESSAGE IF DATA PROVIDED IN FORM IS INAVALID -->
+    {%with messages = get_flashed_messages(with_categories=true)%}
+    {% if messages%}
+    {% for category, message in messages%}
+    <div class="alert alert-{{category}}">
+        {{message}}
+    </div>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+    {{form.hidden_tag()}}
+    <div>
+        {{ form.password.label(class="form-control middle")}}
+        {%if form.password.errors%}
+        {{form.password(class="form-control middle is-invalid")}}
+        <div class="invalid-feedback">
+            {%for error in form.password.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.password(class="form-control middle")}}
+        {%endif%}
+
+    </div>
+    <div>
+        {{ form.confirmPassword.label(class="form-control middle")}}
+        {%if form.confirmPassword.errors%}
+        {{form.confirmPassword(class="form-control middle is-invalid")}}
+        <div class="invalid-feedback">
+            {%for error in form.confirmPassword.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.confirmPassword(class="form-control middle")}}
+        {%endif%}
+    
+    </div>
+
+    {{form.submit(class="w-100 btn btn-lg btn-primary", type="submit")}}
+</main>
+{%endblock%}

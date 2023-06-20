@@ -1,0 +1,84 @@
+{% extends "sign_upLayout.html"%}
+{%block content%}
+<main class="form-signin w-100 m-auto">
+    <img src="https://cdn-icons-png.flaticon.com/512/3533/3533271.png" height=50px alt="">
+    <h1 class="h3 mb-3 fw-normal">SignUp for Health Lab</h1>
+    {%with messages = get_flashed_messages(with_categories=true)%}
+    {% if messages%}
+    {% for category, message in messages%}
+    <div class="alert alert-{{category}}">
+        {{message}}
+    </div>
+    {%endfor%}
+    {%endif%}
+    {%endwith%}
+    {{form.hidden_tag()}}
+    <div>
+        {{ form.username.label(class="form-control top")}}
+        {% if form.username.errors%}
+        {{ form.username(class="form-control top is-invalid")}}
+        <div class="invalid-feedback">
+            {%for error in form.username.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.username(class="form-control top")}}
+        {%endif%}
+
+    </div>
+    <div>
+
+        {{ form.email.label(class="form-control middle")}}
+        {%if form.email.errors%}
+        {{form.email(class="form-control middle is-invalid")}}
+        <div class="invalid-feedback">
+            {%for error in form.email.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.email(class="form-control middle")}}
+        {%endif%}
+
+    </div>
+    <div>
+
+        {{ form.password.label(class="form-control bottom")}}
+
+        {%if form.password.errors%}
+        {{form.password(class="form-control bottom is-invalid")}}
+        <div class="invalid-feedback">
+            {% for error in form.password.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.password(class="form-control bottom")}}
+        {%endif%}
+
+    </div>
+    <div>
+
+        {{ form.confirmPassword.label(class="form-control down")}}
+        {%if form.confirmPassword.errors%}
+        {{form.confirmPassword(class="form-control down is-invalid")}}
+        <div class="invalid-feedback">
+            {% for error in form.confirmPassword.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.confirmPassword(class="form-control down")}}
+        {%endif%}
+    </div>
+    {{form.submit(class="w-100 btn btn-lg btn-primary", type="submit")}}
+    </form>
+</main>
+<div>
+    <small class="border-top pt-3">
+        Already have an account? <a class="ml-2" href="{{url_for('login')}}">Sign In</a>
+    </small>
+</div>
+
+{%endblock%}

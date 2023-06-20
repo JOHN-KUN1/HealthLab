@@ -1,0 +1,39 @@
+{% extends "layout_post.html"%}
+{%block content%}
+<form action="" method="POST">
+    {{form.hidden_tag()}}
+    <h1>Leave a post</h1>
+    <div>
+    
+        {{ form.title.label(class="form-control middle")}}
+        {%if form.title.errors%}
+        {{form.title(class="form-control middle is-invalid")}}
+        <div class="invalid-feedback">
+            {%for error in form.title.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.title(class="form-control middle")}}
+        {%endif%}
+    
+    </div>
+    <div>
+    
+        {{ form.content.label(class="form-control bottom")}}
+    
+        {%if form.content.errors%}
+        {{form.content(class="form-control bottom is-invalid")}}
+        <div class="invalid-feedback">
+            {% for error in form.content.errors%}
+            <span>{{error}}</span>
+            {%endfor%}
+        </div>
+        {%else%}
+        {{form.content(class="form-control bottom")}}
+        {%endif%}
+    </div>
+    {{form.submit(class="w-100 btn btn-lg btn-primary", type="submit")}}
+</form>
+
+{%endblock content%}

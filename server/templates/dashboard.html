@@ -1,0 +1,133 @@
+{%extends 'tracker_layout.html'%}
+{%block content%}
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="income_vs_expense"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="income_vs_expense_bar"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="expenses_over_time"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+{%block javascript%}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+    Chart.scaleService.updateScaleDefaults('linear', {
+        ticks: {
+            min: 0
+        }
+    });
+
+    let income_expenses = JSON.parse({{ income_vs_expenses | tojson}});
+
+    let income_vs_expense_chart = new Chart(document.getElementById("income_vs_expense"), {
+        type: 'pie',
+        data: {
+            labels: ['Gain', 'Loss'],
+            datasets: [{
+                label: "Weight Gain Vs Weight Loss",
+                data: income_expenses,
+                backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                borderWidth: 1,
+                hoverBorderColor: "black",
+                hoverBorderWidth: 2,
+                hoverBackgroundColor: 'rgba(154, 245, 140)',
+                pointHoverRadius: 5
+            }],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Weight Gain Vs Weight Loss",
+                fontSize: 20,
+            },
+            legend: {
+                position: "right",
+                labels: {
+                    fontColor: "gray"
+                },
+                display: true,
+            },
+            elements: {
+                hitRadius: 3,
+            }
+        }
+    });
+
+    let income_vs_expense_bar_chart = new Chart(document.getElementById("income_vs_expense_bar"), {
+        type: 'bar',
+        data: {
+            labels: ['Gain', 'Loss'],
+            datasets: [{
+                label: "Weight Gain Vs Weight Loss",
+                data: income_expenses,
+                backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                borderWidth: 1,
+                hoverBorderColor: "black",
+                hoverBorderWidth: 2,
+                hoverBackgroundColor: 'rgba(154, 245, 140)',
+                pointHoverRadius: 5
+            }],
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Weight Gain Vs Weight Loss",
+                fontSize: 20,
+            },
+            legend: {
+                position: "right",
+                labels: {
+                    fontColor: "gray"
+                },
+                display: true,
+            },
+            elements: {
+                hitRadius: 3,
+            }
+        }
+    });
+
+    let labels = JSON.parse({{ dates_labels | tojson}});
+    let amounts = JSON.parse({{ over_time_expenditure | tojson}});
+
+    new Chart(document.getElementById("expenses_over_time"), {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Weight gain/loss over time",
+                data: amounts,
+                fill: false,
+                borderColor: "rgb(75, 192, 192)",
+                lineTension: 0.1
+            }]
+        },
+        options: {}
+    });
+</script>
+
+{%endblock%}
+{%endblock%}
